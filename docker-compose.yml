@@ -1,0 +1,8 @@
+version: '3'
+services:
+  arch:
+    build: .
+    volumes:
+      - .:/home/root/
+    stdin_open: true
+    tty: true
