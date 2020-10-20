@@ -13,4 +13,8 @@ call vundle#end()
 filetype plugin indent on
 
 
+" Nerd Tree config
+let NERDTreeMinimalUI = 1
+let NERDTreeDirArrows = 1
+let g:NERDTreeWinSize = 30
 map <C-\> :NERDTreeToggle<CR>
