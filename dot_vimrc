@@ -10,6 +10,8 @@ Plugin 'tpope/vim-fugitive'
 Plugin 'preservim/nerdtree'
 Plugin 'kristijanhusak/vim-hybrid-material'
 
+" Navigation
+Plugin 'christoomey/vim-tmux-navigator'
 call vundle#end()
 filetype plugin indent on
 
@@ -36,3 +38,11 @@ endif
 if (has("termguicolors"))
   set termguicolors
 endif
+
+" Tmux navigator, avoid mapping nerdtree toggle shortcut
+let g:tmux_navigator_no_mappings = 1
+nnoremap <silent> <C-h> :TmuxNavigateLeft<cr>
+nnoremap <silent> <C-j> :TmuxNavigateDown<cr>
+nnoremap <silent> <C-k> :TmuxNavigateUp<cr>
+nnoremap <silent> <C-l> :TmuxNavigateRight<cr>
+nnoremap <silent> <C-/> :TmuxNavigatePrevious<cr>
