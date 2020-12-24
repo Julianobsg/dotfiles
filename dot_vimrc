@@ -53,6 +53,7 @@ nnoremap <silent> <C-/> :TmuxNavigatePrevious<cr>
 
 " Programming languages
 Plugin 'ycm-core/YouCompleteMe'
+Plugin 'dense-analysis/ale'
 
 " Rust
 Plugin 'rust-lang/rust.vim'
