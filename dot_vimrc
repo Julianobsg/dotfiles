@@ -12,6 +12,9 @@ Plugin 'kristijanhusak/vim-hybrid-material'
 
 " Navigation
 Plugin 'christoomey/vim-tmux-navigator'
+
+" Text editor
+Plugin 'tpope/vim-abolish'
 call vundle#end()
 filetype plugin indent on
 
