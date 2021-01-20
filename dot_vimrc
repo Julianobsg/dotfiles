@@ -51,6 +51,9 @@ nnoremap <silent> <C-l> :TmuxNavigateRight<cr>
 nnoremap <silent> <C-/> :TmuxNavigatePrevious<cr>
 
 
+" Search
+Plugin 'mileszs/ack.vim'
+
 " Programming languages
 Plugin 'ycm-core/YouCompleteMe'
 Plugin 'dense-analysis/ale'
