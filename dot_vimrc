@@ -24,7 +24,14 @@ filetype plugin indent on
 let NERDTreeMinimalUI = 1
 let NERDTreeDirArrows = 1
 let g:NERDTreeWinSize = 30
-map <C-\> :NERDTreeToggle<CR>
+function! OpenNerdTree()
+	if &modifiable && strlen(expand('%')) > 0 && !&diff
+		NERDTreeFind
+	else
+		NERDTreeToggle
+	endif
+endfunction
+nnoremap <silent> <C-\> :call OpenNerdTree()<CR>
 
 " Colors scheme
 let g:enable_bold_font = 1
