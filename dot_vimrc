@@ -67,9 +67,17 @@ nnoremap <silent> <C-l> :TmuxNavigateRight<cr>
 nnoremap <silent> <C-/> :TmuxNavigatePrevious<cr>
 
 " Search
+set ignorecase 
+set smartcase " Only check case if we type a capital
 
+nnoremap <silent> ,t :FZF<cr>
 
 " ----- Programming languages
+
+" Folds
+set foldmethod=indent
+set foldnestmax=3
+set nofoldenable
 
 " Godot
 func! GodotSettings() abort
