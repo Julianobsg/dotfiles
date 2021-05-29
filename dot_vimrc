@@ -77,6 +77,15 @@ nnoremap <silent> ,t :FZF<cr>
 
 " ----- Programming languages
 
+" Indentation
+set autoindent
+set smartindent
+set smarttab
+set shiftwidth=2
+set softtabstop=2
+set tabstop=2
+set expandtab
+
 " Folds
 set foldmethod=indent
 set foldnestmax=3
