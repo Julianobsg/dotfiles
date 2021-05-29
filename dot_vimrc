@@ -26,6 +26,9 @@ Plugin 'dense-analysis/ale'
 
 Plugin 'rust-lang/rust.vim'
 Plugin 'habamax/vim-godot'
+Plugin 'vim-scripts/Align'
+Plugin 'vim-scripts/SQLUtilities'
+Plugin 'wakatime/vim-wakatime'
 call vundle#end()
 filetype plugin indent on
 " Nerd Tree config
