@@ -28,6 +28,8 @@ Plugin 'rust-lang/rust.vim'
 Plugin 'habamax/vim-godot'
 Plugin 'vim-scripts/Align'
 Plugin 'vim-scripts/SQLUtilities'
+Plugin 'eslint/eslint'
+
 Plugin 'wakatime/vim-wakatime'
 call vundle#end()
 filetype plugin indent on
@@ -93,7 +95,7 @@ set nofoldenable
 
 " Godot
 func! GodotSettings() abort
-	setlocal tabstop=4
+  set softtabstop=0 shiftwidth=4 tabstop=4
 	nnoremap <buffer> <F4> :GodotRunLast<CR>
 	nnoremap <buffer> <F5> :GodotRun<CR>
 	nnoremap <buffer> <F6> :GodotRunCurrent<CR>
@@ -102,3 +104,15 @@ endfunc
 augroup godot | au!
 	au FileType gdscript call GodotSettings()
 augroup end
+
+if !has_key( g:, 'ycm_language_server' )  
+  let g:ycm_language_server = []
+endif
+let g:ycm_language_server += [
+      \   {
+      \     'name': 'godot',
+      \     'filetypes': [ 'gdscript' ],
+      \     'project_root_files': [ 'project.godot' ],
+      \     'port': 6008  
+      \   }  
+      \ ]
