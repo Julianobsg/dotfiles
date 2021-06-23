@@ -1,2 +1,2 @@
-set -Ux EDITOR vim
+set -Ux EDITOR nvim
 rvm default
