@@ -31,7 +31,9 @@ Plugin 'vim-scripts/SQLUtilities'
 Plugin 'eslint/eslint'
 
 Plugin 'wakatime/vim-wakatime'
+Plugin 'puremourning/vimspector'
 call vundle#end()
+
 filetype plugin indent on
 " Nerd Tree config
 let NERDTreeMinimalUI = 1
@@ -78,6 +80,8 @@ set smartcase " Only check case if we type a capital
 nnoremap <silent> ,t :FZF<cr>
 
 " ----- Programming languages
+
+let g:vimspector_enable_mappings = 'HUMAN'
 
 " Indentation
 set autoindent
