@@ -37,6 +37,8 @@ Plugin 'pangloss/vim-javascript'
 Plugin 'leafgarland/typescript-vim'
 Plugin 'maxmellon/vim-jsx-pretty'
 Plugin 'burnettk/vim-angular'
+
+Plugin 'nvie/vim-flake8'
 call vundle#end()
 
 filetype plugin indent on
@@ -101,6 +103,10 @@ set expandtab
 set foldmethod=indent
 set foldnestmax=3
 set nofoldenable
+
+" Python
+
+autocmd FileType python set softtabstop=4 shiftwidth=4 tabstop=4
 
 " Godot
 func! GodotSettings() abort
