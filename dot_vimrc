@@ -32,6 +32,10 @@ Plugin 'eslint/eslint'
 
 Plugin 'wakatime/vim-wakatime'
 Plugin 'puremourning/vimspector'
+
+Plugin 'pangloss/vim-javascript'
+Plugin 'leafgarland/typescript-vim'
+Plugin 'maxmellon/vim-jsx-pretty'
 call vundle#end()
 
 filetype plugin indent on
