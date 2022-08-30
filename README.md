@@ -8,10 +8,13 @@ Installing depencies:
 
 Install allacrity: https://github.com/alacritty/alacritty/releases
 
+Installing brew, chezmoi and oh-my-zsh
 ```
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 
 brew install chezmoi
+
+sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 ```
 
 Initialize chezmoi
