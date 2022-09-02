@@ -11,6 +11,9 @@ Plugin 'VundleVim/Vundle.vim'
 Plugin 'tpope/vim-fugitive'
 Plugin 'preservim/nerdtree'
 Plugin 'kristijanhusak/vim-hybrid-material'
+
+set rtp+=~/.vim/bundle/fzf.vim
+Plugin 'junegunn/fzf'
 Plugin 'junegunn/fzf.vim'
 Plugin 'mileszs/ack.vim'
 
