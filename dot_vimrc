@@ -39,6 +39,9 @@ Plugin 'burnettk/vim-angular'
 
 Plugin 'nvie/vim-flake8'
 
+Plugin 'tpope/vim-rails'
+Plugin 'tpope/vim-bundler'
+
 " Autocomplete
 Plugin 'neoclide/coc.nvim'
 call vundle#end()
