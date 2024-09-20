@@ -32,8 +32,6 @@ Plugin 'vim-scripts/Align'
 Plugin 'vim-scripts/SQLUtilities'
 Plugin 'eslint/eslint'
 
-Plugin 'wakatime/vim-wakatime'
-
 Plugin 'pangloss/vim-javascript'
 Plugin 'leafgarland/typescript-vim'
 Plugin 'maxmellon/vim-jsx-pretty'
