@@ -12,7 +12,6 @@ Plugin 'tpope/vim-fugitive'
 Plugin 'preservim/nerdtree'
 Plugin 'kristijanhusak/vim-hybrid-material'
 
-set rtp+=~/.vim/bundle/fzf.vim
 Plugin 'junegunn/fzf'
 Plugin 'junegunn/fzf.vim'
 Plugin 'mileszs/ack.vim'
@@ -30,7 +29,6 @@ Plugin 'rust-lang/rust.vim'
 Plugin 'habamax/vim-godot'
 Plugin 'vim-scripts/Align'
 Plugin 'vim-scripts/SQLUtilities'
-Plugin 'eslint/eslint'
 
 Plugin 'pangloss/vim-javascript'
 Plugin 'leafgarland/typescript-vim'
@@ -92,9 +90,7 @@ set smartcase " Only check case if we type a capital
 nnoremap <silent> ,t :FZF<cr>
 
 " ----- Programming languages
-
-let g:vimspector_enable_mappings = 'HUMAN'
-
+"
 " Indentation
 set autoindent
 set smartindent
@@ -115,11 +111,11 @@ set nobackup
 set nowritebackup
 set updatetime=300
 
-runtime coc.vim
+runtime! coc.vim
 
 " Python
 
-autocmd FileType python set softtabstop=4 shiftwidth=4 tabstop=4
+autocmd FileType python setlocal softtabstop=4 shiftwidth=4 tabstop=4
 
 " Godot
 func! GodotSettings() abort
@@ -139,3 +135,4 @@ call ale#linter#Define('gdscript', {
       \   'address': '127.0.0.1:6008',
       \   'project_root': 'project.godot',
       \})
+
