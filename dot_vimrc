@@ -1,46 +1,48 @@
 set nocompatible
 set number
-filetype off
 let mapleader = ","
 
-set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
+" vim-plug (Vim/Neovim)
+if has('nvim')
+  call plug#begin('~/.local/share/nvim/plugged')
+else
+  call plug#begin('~/.vim/plugged')
+endif
 
-Plugin 'VundleVim/Vundle.vim'
+Plug 'tpope/vim-fugitive'
+Plug 'preservim/nerdtree'
+Plug 'kristijanhusak/vim-hybrid-material'
 
-Plugin 'tpope/vim-fugitive'
-Plugin 'preservim/nerdtree'
-Plugin 'kristijanhusak/vim-hybrid-material'
-
-Plugin 'junegunn/fzf'
-Plugin 'junegunn/fzf.vim'
-Plugin 'mileszs/ack.vim'
+Plug 'junegunn/fzf'
+Plug 'junegunn/fzf.vim'
+Plug 'mileszs/ack.vim'
 
 " Navigation
-Plugin 'christoomey/vim-tmux-navigator'
+Plug 'christoomey/vim-tmux-navigator'
 
 " Text editor
-Plugin 'tpope/vim-abolish'
+Plug 'tpope/vim-abolish'
 
 " Languages
-Plugin 'rust-lang/rust.vim'
-Plugin 'habamax/vim-godot'
-Plugin 'vim-scripts/Align'
-Plugin 'vim-scripts/SQLUtilities'
+Plug 'rust-lang/rust.vim'
+Plug 'habamax/vim-godot'
+Plug 'vim-scripts/Align'
+Plug 'vim-scripts/SQLUtilities'
 
-Plugin 'pangloss/vim-javascript'
-Plugin 'leafgarland/typescript-vim'
-Plugin 'maxmellon/vim-jsx-pretty'
-Plugin 'burnettk/vim-angular'
+Plug 'pangloss/vim-javascript'
+Plug 'leafgarland/typescript-vim'
+Plug 'maxmellon/vim-jsx-pretty'
+Plug 'burnettk/vim-angular'
 
-Plugin 'nvie/vim-flake8'
+Plug 'nvie/vim-flake8'
 
-Plugin 'tpope/vim-rails'
-Plugin 'tpope/vim-bundler'
+Plug 'tpope/vim-rails'
+Plug 'tpope/vim-bundler'
 
-call vundle#end()
+call plug#end()
 
 filetype plugin indent on
+syntax on
 " Nerd Tree config
 let NERDTreeMinimalUI = 1
 let NERDTreeDirArrows = 1
