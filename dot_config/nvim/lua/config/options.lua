@@ -6,6 +6,8 @@ vim.opt.termguicolors = true
 
 vim.opt.ignorecase = true
 vim.opt.smartcase = true
+vim.opt.grepprg = "rg --vimgrep --smart-case"
+vim.opt.grepformat = "%f:%l:%c:%m"
 
 vim.opt.autoindent = true
 vim.opt.smartindent = true
