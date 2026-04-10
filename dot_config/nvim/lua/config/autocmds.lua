@@ -1,4 +1,7 @@
 local api = vim.api
+local python_settings = api.nvim_create_augroup("python-settings", { clear = true })
+local gdscript_settings = api.nvim_create_augroup("gdscript-settings", { clear = true })
+local appearance = api.nvim_create_augroup("appearance", { clear = true })
 
 local function set_transparent_bg()
   local groups = {
@@ -18,22 +21,24 @@ local function set_transparent_bg()
 end
 
 api.nvim_create_autocmd("FileType", {
+  group = python_settings,
   pattern = "python",
-  callback = function()
-    vim.bo.softtabstop = 4
-    vim.bo.shiftwidth = 4
-    vim.bo.tabstop = 4
+  callback = function(args)
+    vim.bo[args.buf].softtabstop = 4
+    vim.bo[args.buf].shiftwidth = 4
+    vim.bo[args.buf].tabstop = 4
     vim.opt_local.textwidth = 88
     vim.opt_local.colorcolumn = "89"
   end,
 })
 
 api.nvim_create_autocmd("FileType", {
+  group = gdscript_settings,
   pattern = "gdscript",
-  callback = function()
-    vim.bo.softtabstop = 0
-    vim.bo.shiftwidth = 4
-    vim.bo.tabstop = 4
+  callback = function(args)
+    vim.bo[args.buf].softtabstop = 0
+    vim.bo[args.buf].shiftwidth = 4
+    vim.bo[args.buf].tabstop = 4
 
     vim.keymap.set("n", "<F4>", "<cmd>GodotRunLast<cr>", { buffer = true, silent = true })
     vim.keymap.set("n", "<F5>", "<cmd>GodotRun<cr>", { buffer = true, silent = true })
@@ -43,5 +48,6 @@ api.nvim_create_autocmd("FileType", {
 })
 
 api.nvim_create_autocmd({ "ColorScheme", "VimEnter" }, {
+  group = appearance,
   callback = set_transparent_bg,
 })
