@@ -78,6 +78,32 @@ return require("packer").startup(function(use)
     config = function()
       local conform = require("conform")
 
+      local function find_project_file(bufnr, names)
+        local path = vim.api.nvim_buf_get_name(bufnr)
+        if path == "" then
+          return nil
+        end
+
+        return vim.fs.find(names, {
+          path = vim.fs.dirname(path),
+          upward = true,
+          type = "file",
+        })[1]
+      end
+
+      local function python_has_project_ruff_config(bufnr)
+        if find_project_file(bufnr, { "ruff.toml", ".ruff.toml" }) then
+          return true
+        end
+
+        local pyproject = find_project_file(bufnr, { "pyproject.toml" })
+        if not pyproject then
+          return false
+        end
+
+        return table.concat(vim.fn.readfile(pyproject), "\n"):match("%[tool%.ruff") ~= nil
+      end
+
       conform.setup({
         formatters_by_ft = {
           python = { "ruff_organize_imports", "ruff_format" },
@@ -87,13 +113,18 @@ return require("packer").startup(function(use)
             return
           end
 
+          -- Only autoformat when the project defines Ruff settings itself.
+          if not python_has_project_ruff_config(bufnr) then
+            return
+          end
+
           return { timeout_ms = 500 }
         end,
       })
 
-      vim.keymap.set("n", ",f", function()
+      vim.keymap.set({ "n", "v" }, ",f", function()
         conform.format({ async = true })
-      end, { silent = true, desc = "Format buffer" })
+      end, { silent = true, desc = "Format buffer or selection" })
     end,
   })
 

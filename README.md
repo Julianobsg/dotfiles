@@ -28,6 +28,10 @@ For Python support in Neovim, install `ruff` too:
 brew install ruff
 ```
 
-The repo also installs a fallback Ruff config at `~/.config/ruff/pyproject.toml`, and Python buffers in Neovim use Ruff for linting plus formatting/import cleanup on save.
+The repo also installs a fallback Ruff config at `~/.config/ruff/pyproject.toml`.
+
+Python buffers in Neovim use Ruff for linting, and they only autoformat on save when the project defines Ruff config in `pyproject.toml`, `ruff.toml`, or `.ruff.toml`.
+
+Use `,f` in normal mode to format the file, or in visual mode to format just the selected lines.
 
 After applying the dotfiles, run `:PackerSync` once in Neovim.
