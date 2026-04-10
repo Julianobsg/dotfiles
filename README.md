@@ -23,7 +23,11 @@ chezmoi init --apply https://github.com/Julianobsg/dotfiles.git
 ```
 I'm using [chezmoi](https://www.chezmoi.io/docs/install/) to config the dotfiles.
 
-For Python linting in Neovim, install `ruff` too:
+For Python support in Neovim, install `ruff` too:
 ```
 brew install ruff
 ```
+
+The repo also installs a fallback Ruff config at `~/.config/ruff/pyproject.toml`, and Python buffers in Neovim use Ruff for linting plus formatting/import cleanup on save.
+
+After applying the dotfiles, run `:PackerSync` once in Neovim.

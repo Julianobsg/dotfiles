@@ -23,6 +23,8 @@ api.nvim_create_autocmd("FileType", {
     vim.bo.softtabstop = 4
     vim.bo.shiftwidth = 4
     vim.bo.tabstop = 4
+    vim.opt_local.textwidth = 88
+    vim.opt_local.colorcolumn = "89"
   end,
 })
 

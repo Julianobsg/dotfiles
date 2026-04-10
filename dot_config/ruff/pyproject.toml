@@ -1,0 +1,6 @@
+# Fallback Ruff settings for projects that don't provide their own config.
+[tool.ruff]
+line-length = 88
+
+[tool.ruff.lint]
+extend-select = ["B", "I", "UP"]

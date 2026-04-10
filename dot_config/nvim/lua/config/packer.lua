@@ -56,18 +56,44 @@ return require("packer").startup(function(use)
     config = function()
       local lint = require("lint")
 
-      lint.linters_by_ft = {
+      lint.linters_by_ft = vim.tbl_extend("force", lint.linters_by_ft or {}, {
         python = { "ruff" },
-      }
+      })
 
       -- Keep Ruff diagnostics up to date while editing Python files.
       local group = vim.api.nvim_create_augroup("nvim-lint", { clear = true })
       vim.api.nvim_create_autocmd({ "BufEnter", "BufWritePost", "InsertLeave" }, {
         group = group,
-        callback = function()
-          lint.try_lint()
+        callback = function(args)
+          if vim.bo[args.buf].filetype == "python" then
+            lint.try_lint()
+          end
         end,
       })
+    end,
+  })
+
+  use({
+    "stevearc/conform.nvim",
+    config = function()
+      local conform = require("conform")
+
+      conform.setup({
+        formatters_by_ft = {
+          python = { "ruff_organize_imports", "ruff_format" },
+        },
+        format_on_save = function(bufnr)
+          if vim.bo[bufnr].filetype ~= "python" then
+            return
+          end
+
+          return { timeout_ms = 500 }
+        end,
+      })
+
+      vim.keymap.set("n", ",f", function()
+        conform.format({ async = true })
+      end, { silent = true, desc = "Format buffer" })
     end,
   })
 
