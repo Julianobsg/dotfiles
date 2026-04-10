@@ -23,14 +23,16 @@ chezmoi init --apply https://github.com/Julianobsg/dotfiles.git
 ```
 I'm using [chezmoi](https://www.chezmoi.io/docs/install/) to config the dotfiles.
 
-For Python support in Neovim, install `ruff` too:
+For Neovim formatting/linting support, install the tools you use, for example:
 ```
-brew install ruff
+brew install ruff stylua taplo shfmt
 ```
 
 The repo also installs a fallback Ruff config at `~/.config/ruff/pyproject.toml`.
 
-Python buffers in Neovim use Ruff for linting, and they only autoformat on save when the project defines Ruff config in `pyproject.toml`, `ruff.toml`, or `.ruff.toml`.
+Neovim uses Ruff for Python linting and Conform for formatting in Python, Lua, Rust, Ruby, JavaScript/TypeScript, JSON, CSS, HTML, Markdown, YAML, TOML, shell, and Fish.
+
+Autoformat on save only runs when the project defines formatter config, like Ruff, Prettier, StyLua, rustfmt, RuboCop/Standard, or Taplo config files.
 
 Use `,f` in normal mode to format the file, or in visual mode to format just the selected lines.
 

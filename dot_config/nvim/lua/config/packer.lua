@@ -77,6 +77,31 @@ return require("packer").startup(function(use)
     "stevearc/conform.nvim",
     config = function()
       local conform = require("conform")
+      local prettier_filetypes = {
+        javascript = true,
+        javascriptreact = true,
+        typescript = true,
+        typescriptreact = true,
+        json = true,
+        jsonc = true,
+        css = true,
+        scss = true,
+        html = true,
+        yaml = true,
+        markdown = true,
+      }
+      local project_config_files = {
+        lua = { "stylua.toml", ".stylua.toml" },
+        rust = { "rustfmt.toml", ".rustfmt.toml" },
+        ruby = {
+          ".rubocop.yml",
+          ".rubocop.yaml",
+          "rubocop.yml",
+          "rubocop.yaml",
+          ".standard.yml",
+        },
+        toml = { "taplo.toml", ".taplo.toml" },
+      }
 
       local function find_project_file(bufnr, names)
         local path = vim.api.nvim_buf_get_name(bufnr)
@@ -91,6 +116,29 @@ return require("packer").startup(function(use)
         })[1]
       end
 
+      local function file_contains(path, pattern)
+        local ok, lines = pcall(vim.fn.readfile, path)
+        if not ok then
+          return false
+        end
+
+        return table.concat(lines, "\n"):match(pattern) ~= nil
+      end
+
+      local function read_json(path)
+        local ok, lines = pcall(vim.fn.readfile, path)
+        if not ok then
+          return nil
+        end
+
+        local success, decoded = pcall(vim.json.decode, table.concat(lines, "\n"))
+        if not success then
+          return nil
+        end
+
+        return decoded
+      end
+
       local function python_has_project_ruff_config(bufnr)
         if find_project_file(bufnr, { "ruff.toml", ".ruff.toml" }) then
           return true
@@ -101,20 +149,81 @@ return require("packer").startup(function(use)
           return false
         end
 
-        return table.concat(vim.fn.readfile(pyproject), "\n"):match("%[tool%.ruff") ~= nil
+        return file_contains(pyproject, "%[tool%.ruff")
+      end
+
+      local function prettier_has_project_config(bufnr)
+        if find_project_file(bufnr, {
+          ".prettierrc",
+          ".prettierrc.json",
+          ".prettierrc.yml",
+          ".prettierrc.yaml",
+          ".prettierrc.json5",
+          ".prettierrc.toml",
+          ".prettierrc.js",
+          ".prettierrc.cjs",
+          ".prettierrc.mjs",
+          "prettier.config.js",
+          "prettier.config.cjs",
+          "prettier.config.mjs",
+          "prettier.config.ts",
+        }) then
+          return true
+        end
+
+        local package_json = find_project_file(bufnr, { "package.json" })
+        if not package_json then
+          return false
+        end
+
+        local decoded = read_json(package_json)
+        return decoded ~= nil and decoded.prettier ~= nil
+      end
+
+      local function has_project_formatter_config(bufnr)
+        local filetype = vim.bo[bufnr].filetype
+        if filetype == "python" then
+          return python_has_project_ruff_config(bufnr)
+        end
+
+        if prettier_filetypes[filetype] then
+          return prettier_has_project_config(bufnr)
+        end
+
+        local names = project_config_files[filetype]
+        if not names then
+          return false
+        end
+
+        return find_project_file(bufnr, names) ~= nil
       end
 
       conform.setup({
         formatters_by_ft = {
+          lua = { "stylua" },
+          rust = { "rustfmt" },
+          ruby = { "rubocop", "standardrb", stop_after_first = true },
+          javascript = { "prettierd", "prettier", stop_after_first = true },
+          javascriptreact = { "prettierd", "prettier", stop_after_first = true },
+          typescript = { "prettierd", "prettier", stop_after_first = true },
+          typescriptreact = { "prettierd", "prettier", stop_after_first = true },
+          json = { "prettierd", "prettier", stop_after_first = true },
+          jsonc = { "prettierd", "prettier", stop_after_first = true },
+          css = { "prettierd", "prettier", stop_after_first = true },
+          scss = { "prettierd", "prettier", stop_after_first = true },
+          html = { "prettierd", "prettier", stop_after_first = true },
+          markdown = { "prettierd", "prettier", stop_after_first = true },
+          yaml = { "prettierd", "prettier", stop_after_first = true },
+          toml = { "taplo" },
+          sh = { "shfmt" },
+          bash = { "shfmt" },
+          zsh = { "shfmt" },
+          fish = { "fish_indent" },
           python = { "ruff_organize_imports", "ruff_format" },
         },
         format_on_save = function(bufnr)
-          if vim.bo[bufnr].filetype ~= "python" then
-            return
-          end
-
-          -- Only autoformat when the project defines Ruff settings itself.
-          if not python_has_project_ruff_config(bufnr) then
+          -- Only autoformat when the project defines formatter settings itself.
+          if not has_project_formatter_config(bufnr) then
             return
           end
 
