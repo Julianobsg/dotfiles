@@ -21,6 +21,11 @@ vim.opt.foldmethod = "indent"
 vim.opt.foldnestmax = 3
 vim.opt.foldenable = false
 
+vim.g.svelte_preprocessors = { "typescript", "ts" }
+vim.g.svelte_preprocessor_tags = {
+  { name = "ts", tag = "script", as = "typescript" },
+}
+
 vim.g.tmux_navigator_no_mappings = 1
 local map = vim.keymap.set
 map("n", "<C-h>", "<cmd>TmuxNavigateLeft<cr>", { silent = true, desc = "Tmux left" })
