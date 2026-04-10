@@ -1,6 +1,6 @@
 # dotfiles
 
-Dotfiles, made for Ruby, Rust and Javascript programming.
+Dotfiles, made for Ruby, Rust, Javascript and Python programming.
 
 ## Instalation
 
@@ -22,3 +22,8 @@ Initialize chezmoi
 chezmoi init --apply https://github.com/Julianobsg/dotfiles.git
 ```
 I'm using [chezmoi](https://www.chezmoi.io/docs/install/) to config the dotfiles.
+
+For Python linting in Neovim, install `ruff` too:
+```
+brew install ruff
+```
