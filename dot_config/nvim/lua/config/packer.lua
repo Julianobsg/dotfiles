@@ -62,14 +62,20 @@ return require("packer").startup(function(use)
 
       lint.linters_by_ft = vim.tbl_extend("force", lint.linters_by_ft or {}, {
         python = { "ruff" },
+        ruby = { "rubocop" },
       })
 
-      -- Keep Ruff diagnostics up to date while editing Python files.
+      local lint_filetypes = {
+        python = true,
+        ruby = true,
+      }
+
+      -- Keep diagnostics up to date while editing files handled by nvim-lint.
       local group = vim.api.nvim_create_augroup("nvim-lint", { clear = true })
       vim.api.nvim_create_autocmd({ "BufEnter", "BufWritePost", "InsertLeave" }, {
         group = group,
         callback = function(args)
-          if vim.bo[args.buf].filetype == "python" then
+          if lint_filetypes[vim.bo[args.buf].filetype] then
             lint.try_lint()
           end
         end,

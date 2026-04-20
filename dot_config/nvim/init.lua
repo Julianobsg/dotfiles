@@ -5,3 +5,5 @@ require("config.options")
 require("config.keymaps")
 require("config.autocmds")
 require("config.packer")
+
+vim.lsp.enable("solargraph")
