@@ -56,6 +56,68 @@ return require("packer").startup(function(use)
   })
 
   use({
+    "sindrets/diffview.nvim",
+    requires = { "nvim-lua/plenary.nvim" },
+    config = function()
+      local diffview = require("diffview")
+
+      diffview.setup({})
+
+      local function git_ref_exists(ref)
+        vim.fn.system({ "git", "rev-parse", "--verify", ref })
+        return vim.v.shell_error == 0
+      end
+
+      local function default_pr_base()
+        local origin_head = vim.fn.systemlist({ "git", "symbolic-ref", "refs/remotes/origin/HEAD", "--short" })[1]
+        if vim.v.shell_error == 0 and origin_head and origin_head ~= "" then
+          return origin_head
+        end
+
+        for _, ref in ipairs({ "origin/main", "origin/master", "main", "master" }) do
+          if git_ref_exists(ref) then
+            return ref
+          end
+        end
+      end
+
+      local function pr_range(arg)
+        arg = vim.trim(arg or "")
+
+        if arg == "" then
+          local base = default_pr_base()
+          if not base then
+            vim.notify("Could not determine a default PR base branch. Use :PR origin/main", vim.log.levels.ERROR)
+            return nil
+          end
+
+          return base .. "...HEAD"
+        end
+
+        if arg:find("%.%.%.") then
+          return arg
+        end
+
+        if arg:find("%.%.") then
+          return (arg:gsub("%.%.", "...", 1))
+        end
+
+        return arg .. "...HEAD"
+      end
+
+      vim.api.nvim_create_user_command("PR", function(opts)
+        local range = pr_range(opts.args)
+        if range then
+          diffview.open({ range })
+        end
+      end, {
+        nargs = "?",
+        desc = "Open a PR-style branch comparison in Diffview",
+      })
+    end,
+  })
+
+  use({
     "mfussenegger/nvim-lint",
     config = function()
       local lint = require("lint")
